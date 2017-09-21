@@ -22,7 +22,7 @@ class ZaifChartApi:
         response = requests.get(url, params=params)
         if response.status_code != 200:
             raise Exception('return status code is {}'.format(response.status_code))
-        ohlc_data = json.loads(json.loads(response.text))['ohlc_data']
+        ohlc_data = json.loads(json.loads(response.text), parse_constant=str)['ohlc_data']
         return list(map(self._time_digits_adjust, ohlc_data))
 
     @staticmethod
@@ -45,5 +45,5 @@ class ZaifChartApi:
 
     @staticmethod
     def _time_digits_adjust(an_olhc_data):
-        an_olhc_data['time'] = int(an_olhc_data['time'] / 1000)
+        an_olhc_data['time'] = str(an_olhc_data['time'] / 1000)
         return an_olhc_data
