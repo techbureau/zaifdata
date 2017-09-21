@@ -75,6 +75,19 @@ class TestPrices(unittest.TestCase):
 
         assert_frame_equal(df_from_web, df_from_csv)
 
+    def test_prices_count(self):
+        currency_pair = 'xem_jpy'
+        period = '4h'
+
+        test_counts = [1, 3, 4]
+
+        res_counts = []
+        for count in test_counts:
+            res_counts.append(len(zdp.get_data_by_count(currency_pair=currency_pair,
+                                                        period=period,
+                                                        count=count)))
+
+        self.assertEqual(res_counts, test_counts)
 
 if __name__ == '__main__':
     unittest.main()
