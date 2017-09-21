@@ -23,7 +23,7 @@ class _BaseData(metaclass=ABCMeta):
 
     def to_any_style(self, style):
         if style not in self._data_styles:
-            raise Exception("unexpected data style: '{}'".format(style))
+            raise ValueError("unexpected data style: '{}'".format(style))
         # fixme: define custom exception
 
         to_style = 'to_' + style
