@@ -45,5 +45,5 @@ class ZaifChartApi:
 
     @staticmethod
     def _time_digits_adjust(an_olhc_data):
-        an_olhc_data['time'] = str(an_olhc_data['time'] / 1000)
+        an_olhc_data['time'] = str(int(an_olhc_data['time'] / 1000))
         return an_olhc_data
