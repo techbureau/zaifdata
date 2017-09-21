@@ -27,5 +27,7 @@ setup(
         'requests',
         'pandas',
     ],
-    extras_require={},
+    extras_require={
+        'indicators': ['TA-Lib']
+    },
 )
