@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from zaifdata.core import ZaifChartApi
+from zaifdata.data_source import ZaifChartApi
 import pandas
 import time
 
