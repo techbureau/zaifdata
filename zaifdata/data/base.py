@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from zaifdata.data_source import ZaifChartApi
-import pandas
+import pandas as pd
 import time
 
 
@@ -17,9 +17,9 @@ class _BaseData(metaclass=ABCMeta):
     def to_dict(self):
         return self.data
 
+    @abstractmethod
     def to_df(self):
-        df = pandas.DataFrame(self.data)
-        return df
+        raise NotImplementedError
 
     def to_any_style(self, style):
         if style not in self._data_styles:
@@ -59,6 +59,11 @@ class HistoricalPrices(_BaseData):
                                              from_sec=from_,
                                              to_sec=now)[-count:]
         return self
+
+    def to_df(self):
+        df = pd.DataFrame(self.data, dtype='float')
+        df[['time']] = df[['time']].astype('int64')
+        return df
 
 #  fixme 1: not calc, but set const
 #  fixme 2: define 'period' class
