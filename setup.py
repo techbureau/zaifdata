@@ -25,7 +25,7 @@ setup(
     ],
     install_requires=[
         'requests',
-        'pandas'
+        'pandas',
     ],
     extras_require={},
 )
