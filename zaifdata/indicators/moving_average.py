@@ -9,7 +9,7 @@ class _MA(Indicator, metaclass=ABCMeta):
         super().__init__(currency_pair, period)
         self.length = length
 
-    def request_data(self, count=100, to_epoch_time=None, style='df'):
+    def request_data(self, count=100, to_epoch_time=None, style='dict'):
         price_data = get_data_by_count(currency_pair=self.currency_pair,
                                        period=self.period,
                                        count=self._get_required_price_count(count),
