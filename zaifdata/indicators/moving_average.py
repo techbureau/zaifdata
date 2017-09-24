@@ -19,6 +19,9 @@ class _MA(Indicator, metaclass=ABCMeta):
         formatted_ma = self._formatting(price_data, ma, style)
         return formatted_ma
 
+    def _get_required_price_count(self, count):
+        return count + self.length - 1
+
     def is_increasing(self):
         previous, last = self.request_data(count=2, style='dict')
         return last[self.name] > previous[self.name]
@@ -37,9 +40,6 @@ class _MA(Indicator, metaclass=ABCMeta):
 
         dict_ma = ma_with_time.astype(object).to_dict(orient='records')
         return dict_ma
-
-    def _get_required_price_count(self, count):
-        return count + self.length - 1
 
 
 class EMA(_MA):

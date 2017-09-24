@@ -13,9 +13,6 @@ class Indicator(metaclass=ABCMeta):
     def request_data(self, *args, **kwargs):
         raise NotImplementedError
 
-    def _exec_talib_func(self, *args, **kwargs):
-        return abstract.Function(self.name)(*args, **kwargs)
-
     @property
     @abstractmethod
     def name(self):
@@ -24,3 +21,6 @@ class Indicator(metaclass=ABCMeta):
     @abstractmethod
     def _get_required_price_count(self, *args, **kwargs):
         raise NotImplementedError
+
+    def _exec_talib_func(self, *args, **kwargs):
+        return abstract.Function(self.name)(*args, **kwargs)

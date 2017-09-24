@@ -25,12 +25,12 @@ class BBANDS(Indicator):
         formatted_bbands = self._formatting(price_data, bbands, style)
         return formatted_bbands
 
-    def _get_required_price_count(self, count):
-        return self.length + count - 1
-
     @property
     def name(self):
         return 'bbands'
+
+    def _get_required_price_count(self, count):
+        return self.length + count - 1
 
     @staticmethod
     def _formatting(candlesticks_df, bbands, style):
