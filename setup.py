@@ -32,6 +32,6 @@ setup(
     },
     entry_points="""\
     [console_scripts]
-    install_ta_lib = zaifdata.setup.talib:install_ta_lib
+    install_talib = zaifdata.setup.talib:install_ta_lib
   """,
 )
