@@ -30,4 +30,8 @@ setup(
     extras_require={
         'indicators': ['TA-Lib']
     },
+    entry_points="""\
+    [console_scripts]
+    install_ta_lib = zaifdata.setup.talib:install_ta_lib
+  """,
 )
