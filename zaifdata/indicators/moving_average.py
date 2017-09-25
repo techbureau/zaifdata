@@ -10,6 +10,7 @@ class _MA(Indicator, metaclass=ABCMeta):
         self.length = length
 
     def request_data(self, count=100, to_epoch_time=None, style='dict'):
+        count = min(count, self.MAX_COUNT)
         price_data = get_data_by_count(currency_pair=self.currency_pair,
                                        period=self.period,
                                        count=self._get_required_price_count(count),
