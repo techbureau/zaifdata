@@ -77,9 +77,7 @@ get_data_by_count(currency_pair='btc_jpy', period='30m', count=2)
 
 ```python
 from zaifdata.indicators import EMA, SMA, BBANDS, RSI, MACD, ADX
-import time
 
-now = int(time.time()) 
 ema = EMA(currency_pair='btc_jpy', period='1h')
 ema.request_data(count=3, style='df')
 
@@ -90,6 +88,13 @@ ema.request_data(count=3, style='df')
 1  1506319200  416148.876923
 2  1506322800  416680.501775
 """
+
+# Or
+
+import time
+now = int(time.time())
+yesterday = now - 86400
+ema.request_data_by_period(start=yesterday, end=now)
 ```
 
-Available (`EMA`, `SMA`, `BBANDS`, `RSI`, `MACD`, `ADX`)
+Available indicators: (`EMA`, `SMA`, `BBANDS`, `RSI`, `MACD`, `ADX`)
