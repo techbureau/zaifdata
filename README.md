@@ -7,11 +7,11 @@
 
 * Support all currency_pairs in Zaif Exchange
 * Able to calc technical indicators
-* Fetch data both by `count` and `datetime`
+* Fetch data both by `count` and `period`
 
 ## Installation
 
-```python
+```bash
 $ pip install zaifdata
 ```
 
@@ -29,7 +29,7 @@ This repo internally use ta_lib to calculate technicals
 ### Get historical prices
 
 ```python
-from zaifdata.data.prices import DataReader, get_data_by_count
+from zaifdata.data.prices import DataReader
 import time
 
 now = int(time.time()) # use 'int' value
