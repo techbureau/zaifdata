@@ -10,7 +10,7 @@ class MACD(Indicator):
         self.long = long
         self.signal = signal
 
-    def request_data(self, count=100, to_epoch_time=None, style='dict'):
+    def request_data(self, count=100, style='dict'):
         count = min(count, self.MAX_COUNT)
         price_data = get_data_by_count(currency_pair=self.currency_pair,
                                        period=self.period,

@@ -10,7 +10,7 @@ class BBANDS(Indicator):
         self.length = length
         self.matype = matype
 
-    def request_data(self, count=100, lowbd=2, upbd=2, to_epoch_time=None, style='dict'):
+    def request_data(self, count=100, lowbd=2, upbd=2, style='dict'):
         count = min(count, self.MAX_COUNT)
         price_data = get_data_by_count(currency_pair=self.currency_pair,
                                        period=self.period,
