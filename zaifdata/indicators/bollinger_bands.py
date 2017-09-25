@@ -1,7 +1,7 @@
 import pandas as pd
 from talib import MA_Type
 from .indicator import Indicator
-from zaifdata.data.prices import get_data_by_count
+from zaifdata.data.prices import get_data_by_count, DataReader
 
 
 class BBANDS(Indicator):
@@ -16,6 +16,22 @@ class BBANDS(Indicator):
                                        period=self.period,
                                        count=self._get_required_price_count(count),
                                        style='df')
+
+        bbands = self._exec_talib_func(price_data,
+                                       timeperiod=self.length,
+                                       nbdevup=upbd,
+                                       nbdevdn=lowbd,
+                                       matype=self.matype)
+
+        formatted_bbands = self._formatting(price_data, bbands, style)
+        return formatted_bbands
+
+    def request_data_by_period(self, start, end, lowbd=2, upbd=2, style='dict'):
+        price_data = DataReader(currency_pair=self.currency_pair,
+                                period=self.period,
+                                start=start,
+                                end=end,
+                                style='df')
 
         bbands = self._exec_talib_func(price_data,
                                        timeperiod=self.length,

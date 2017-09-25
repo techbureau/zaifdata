@@ -1,6 +1,6 @@
 import pandas as pd
 from .indicator import Indicator
-from zaifdata.data.prices import get_data_by_count
+from zaifdata.data.prices import get_data_by_count, DataReader
 
 
 class ADX(Indicator):
@@ -14,6 +14,20 @@ class ADX(Indicator):
                                        period=self.period,
                                        count=self._get_required_price_count(count),
                                        style='df')
+
+        adx = self._exec_talib_func(price_data,
+                                    timeperiod=self.length,
+                                    prices=['high', 'low', 'close'])
+
+        formatted_adx = self._formatting(price_data, adx, style)
+        return formatted_adx
+
+    def request_data_by_period(self, start, end, style='dict'):
+        price_data = DataReader(currency_pair=self.currency_pair,
+                                period=self.period,
+                                start=start,
+                                end=end,
+                                style='df')
 
         adx = self._exec_talib_func(price_data,
                                     timeperiod=self.length,
