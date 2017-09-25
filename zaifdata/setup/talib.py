@@ -1,7 +1,7 @@
 import os
 import sys
 import subprocess
-from zaifbot.errors import ZaifBotError
+from zaifdata.errors import ZaifDataError
 
 
 def install_ta_lib():
@@ -27,7 +27,7 @@ def install_ta_lib():
         __install_talib_for_windows(bits, py_version)
         return
 
-    raise ZaifBotError('zaifbot does not support your platform')
+    raise ZaifDataError('zaifdata does not support your platform')
 
 
 def __install_talib_for_windows(bits, py_version):
@@ -42,4 +42,4 @@ def __install_talib_for_windows(bits, py_version):
         subprocess.call(["pip", "install", file])
         return
 
-    raise ZaifBotError('zaifbot does not support your platform')
+    raise ZaifDataError('zaifdata does not support your platform')
