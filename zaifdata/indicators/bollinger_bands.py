@@ -1,7 +1,7 @@
 import pandas as pd
 from talib import MA_Type
 from .indicator import Indicator
-from zaifdata.data.prices import get_data_by_count
+from zaifdata.data.prices import get_data_by_count, DataReader
 
 
 class BBANDS(Indicator):
@@ -10,16 +10,29 @@ class BBANDS(Indicator):
         self.length = length
         self.matype = matype
 
-    def request_data(self, count=100, lowbd=2, upbd=2, to_epoch_time=None, style='dict'):
+    def request_data(self, count=100, lowbd=2, upbd=2, style='dict'):
+        count = min(count, self.MAX_COUNT)
         price_data = get_data_by_count(currency_pair=self.currency_pair,
                                        period=self.period,
                                        count=self._get_required_price_count(count),
                                        style='df')
 
+        return self._create_bollinger_bands(price_data, lowbd, upbd, style)
+
+    def request_data_by_period(self, start, end, lowbd=2, upbd=2, style='dict'):
+        price_data = DataReader(currency_pair=self.currency_pair,
+                                period=self.period,
+                                start=start,
+                                end=end,
+                                style='df')
+
+        return self._create_bollinger_bands(price_data, lowbd, upbd, style)
+
+    def _create_bollinger_bands(self, price_data, lowbd, upbd, style):
         bbands = self._exec_talib_func(price_data,
                                        timeperiod=self.length,
-                                       nbdevup=upbd,
                                        nbdevdn=lowbd,
+                                       nbdevup=upbd,
                                        matype=self.matype)
 
         formatted_bbands = self._formatting(price_data, bbands, style)

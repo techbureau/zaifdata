@@ -13,6 +13,10 @@ class Indicator(metaclass=ABCMeta):
     def request_data(self, *args, **kwargs):
         raise NotImplementedError
 
+    @abstractmethod
+    def request_data_by_period(self, *args, **kwargs):
+        raise NotImplementedError
+
     @property
     @abstractmethod
     def name(self):

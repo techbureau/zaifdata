@@ -1,6 +1,6 @@
 import pandas as pd
 from .indicator import Indicator
-from zaifdata.data.prices import get_data_by_count
+from zaifdata.data.prices import get_data_by_count, DataReader
 
 
 class MACD(Indicator):
@@ -10,12 +10,25 @@ class MACD(Indicator):
         self.long = long
         self.signal = signal
 
-    def request_data(self, count=100, to_epoch_time=None, style='dict'):
+    def request_data(self, count=100, style='dict'):
+        count = min(count, self.MAX_COUNT)
         price_data = get_data_by_count(currency_pair=self.currency_pair,
                                        period=self.period,
                                        count=self._get_required_price_count(count),
                                        style='df')
 
+        return self._create_macd(price_data, style)
+
+    def request_data_by_period(self, start, end, style='dict'):
+        price_data = DataReader(currency_pair=self.currency_pair,
+                                period=self.period,
+                                start=start,
+                                end=end,
+                                style='df')
+
+        return self._create_macd(price_data, style)
+
+    def _create_macd(self, price_data, style):
         macd = self._exec_talib_func(price_data,
                                      price='close',
                                      fastperiod=self.short,

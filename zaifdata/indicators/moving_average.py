@@ -1,7 +1,7 @@
 from abc import ABCMeta
 import pandas as pd
 from .indicator import Indicator
-from zaifdata.data.prices import get_data_by_count
+from zaifdata.data.prices import get_data_by_count, DataReader
 
 
 class _MA(Indicator, metaclass=ABCMeta):
@@ -9,12 +9,25 @@ class _MA(Indicator, metaclass=ABCMeta):
         super().__init__(currency_pair, period)
         self.length = length
 
-    def request_data(self, count=100, to_epoch_time=None, style='dict'):
+    def request_data(self, count=100, style='dict'):
+        count = min(count, self.MAX_COUNT)
         price_data = get_data_by_count(currency_pair=self.currency_pair,
                                        period=self.period,
                                        count=self._get_required_price_count(count),
                                        style='df')
 
+        return self._create_moving_average(price_data, style)
+
+    def request_data_by_period(self, start, end, style='dict'):
+        price_data = DataReader(currency_pair=self.currency_pair,
+                                period=self.period,
+                                start=start,
+                                end=end,
+                                style='df')
+
+        return self._create_moving_average(price_data, style)
+
+    def _create_moving_average(self, price_data, style):
         ma = self._exec_talib_func(price_data, timeperiod=self.length)
         formatted_ma = self._formatting(price_data, ma, style)
         return formatted_ma
