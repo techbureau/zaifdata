@@ -1,3 +1,7 @@
+※ **Not uploaded to Pypi yet**
+
+-------
+
 # zaifdata
 
 :blue_book: Data Reader for zaif Exchange
