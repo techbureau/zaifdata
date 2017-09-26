@@ -15,12 +15,7 @@ class ADX(Indicator):
                                        count=self._get_required_price_count(count),
                                        style='df')
 
-        adx = self._exec_talib_func(price_data,
-                                    timeperiod=self.length,
-                                    prices=['high', 'low', 'close'])
-
-        formatted_adx = self._formatting(price_data, adx, style)
-        return formatted_adx
+        return self._create_adx(price_data, style)
 
     def request_data_by_period(self, start, end, style='dict'):
         price_data = DataReader(currency_pair=self.currency_pair,
@@ -29,6 +24,9 @@ class ADX(Indicator):
                                 end=end,
                                 style='df')
 
+        return self._create_adx(price_data, style)
+
+    def _create_adx(self, price_data, style):
         adx = self._exec_talib_func(price_data,
                                     timeperiod=self.length,
                                     prices=['high', 'low', 'close'])

@@ -16,9 +16,7 @@ class _MA(Indicator, metaclass=ABCMeta):
                                        count=self._get_required_price_count(count),
                                        style='df')
 
-        ma = self._exec_talib_func(price_data, timeperiod=self.length)
-        formatted_ma = self._formatting(price_data, ma, style)
-        return formatted_ma
+        return self._create_moving_average(price_data, style)
 
     def request_data_by_period(self, start, end, style='dict'):
         price_data = DataReader(currency_pair=self.currency_pair,
@@ -27,6 +25,9 @@ class _MA(Indicator, metaclass=ABCMeta):
                                 end=end,
                                 style='df')
 
+        return self._create_moving_average(price_data, style)
+
+    def _create_moving_average(self, price_data, style):
         ma = self._exec_talib_func(price_data, timeperiod=self.length)
         formatted_ma = self._formatting(price_data, ma, style)
         return formatted_ma

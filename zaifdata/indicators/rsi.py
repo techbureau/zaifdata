@@ -15,9 +15,7 @@ class RSI(Indicator):
                                        count=self._get_required_price_count(count),
                                        style='df')
 
-        rsi = self._exec_talib_func(price_data, price='close', timeperiod=self.length)
-        formatted_rsi = self._formatting(price_data, rsi, style)
-        return formatted_rsi
+        return self._create_rsi(price_data, style)
 
     def request_data_by_period(self, start, end, style='dict'):
         price_data = DataReader(currency_pair=self.currency_pair,
@@ -26,6 +24,9 @@ class RSI(Indicator):
                                 end=end,
                                 style='df')
 
+        return self._create_rsi(price_data, style)
+
+    def _create_rsi(self, price_data, style):
         rsi = self._exec_talib_func(price_data, price='close', timeperiod=self.length)
         formatted_rsi = self._formatting(price_data, rsi, style)
         return formatted_rsi

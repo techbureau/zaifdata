@@ -17,14 +17,7 @@ class BBANDS(Indicator):
                                        count=self._get_required_price_count(count),
                                        style='df')
 
-        bbands = self._exec_talib_func(price_data,
-                                       timeperiod=self.length,
-                                       nbdevup=upbd,
-                                       nbdevdn=lowbd,
-                                       matype=self.matype)
-
-        formatted_bbands = self._formatting(price_data, bbands, style)
-        return formatted_bbands
+        return self._create_bollinger_bands(price_data, lowbd, upbd, style)
 
     def request_data_by_period(self, start, end, lowbd=2, upbd=2, style='dict'):
         price_data = DataReader(currency_pair=self.currency_pair,
@@ -33,10 +26,13 @@ class BBANDS(Indicator):
                                 end=end,
                                 style='df')
 
+        return self._create_bollinger_bands(price_data, lowbd, upbd, style)
+
+    def _create_bollinger_bands(self, price_data, lowbd, upbd, style):
         bbands = self._exec_talib_func(price_data,
                                        timeperiod=self.length,
-                                       nbdevup=upbd,
                                        nbdevdn=lowbd,
+                                       nbdevup=upbd,
                                        matype=self.matype)
 
         formatted_bbands = self._formatting(price_data, bbands, style)

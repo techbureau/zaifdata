@@ -17,14 +17,7 @@ class MACD(Indicator):
                                        count=self._get_required_price_count(count),
                                        style='df')
 
-        macd = self._exec_talib_func(price_data,
-                                     price='close',
-                                     fastperiod=self.short,
-                                     slowperiod=self.long,
-                                     signalperiod=self.signal)
-
-        formatted_macd = self._formatting(price_data, macd, style)
-        return formatted_macd
+        return self._create_macd(price_data, style)
 
     def request_data_by_period(self, start, end, style='dict'):
         price_data = DataReader(currency_pair=self.currency_pair,
@@ -33,6 +26,9 @@ class MACD(Indicator):
                                 end=end,
                                 style='df')
 
+        return self._create_macd(price_data, style)
+
+    def _create_macd(self, price_data, style):
         macd = self._exec_talib_func(price_data,
                                      price='close',
                                      fastperiod=self.short,
