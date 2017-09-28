@@ -35,7 +35,7 @@ class ADX(Indicator):
             dict_adx = adx_with_time.astype(object).to_dict(orient='records')
             return dict_adx
         else:
-            raise Exception
+            raise ValueError('not supported style')
 
     def request_data(self, count=100, style='dict'):
         count = min(count, self.MAX_COUNT)

@@ -27,7 +27,7 @@ class BBANDS(Indicator):
             dict_bands = bbands_with_time.astype(object).to_dict(orient='records')
             return dict_bands
         else:
-            raise Exception
+            raise ValueError('not supported style')
 
     @classmethod
     def create_data_from_prices(cls, price_data_df, lowbd=2, upbd=2, length=25, matype=MA_Type.EMA, style='dict'):

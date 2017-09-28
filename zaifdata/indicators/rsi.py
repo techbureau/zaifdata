@@ -25,6 +25,8 @@ class RSI(Indicator):
         elif style == 'dict':
             dict_rsi = rsi_with_time.astype(object).to_dict(orient='records')
             return dict_rsi
+        else:
+            raise ValueError('not supported style')
 
     @classmethod
     def create_data_from_prices(cls, price_data, length, style):

@@ -25,7 +25,7 @@ class _MA(Indicator, metaclass=ABCMeta):
             dict_ma = ma_with_time.astype(object).to_dict(orient='records')
             return dict_ma
         else:
-            raise Exception
+            raise ValueError('not supported style')
 
     @classmethod
     def create_data_from_prices(cls, price_data, length, style):

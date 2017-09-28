@@ -22,7 +22,7 @@ class MACD(Indicator):
             dict_macd = macd_with_time.astype(object).to_dict(orient='records')
             return dict_macd
         else:
-            raise Exception
+            raise ValueError('not supported style')
 
     @staticmethod
     def _get_required_price_count(long, signal, count):
