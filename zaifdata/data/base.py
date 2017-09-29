@@ -23,8 +23,7 @@ class _BaseData(metaclass=ABCMeta):
 
     def to_any_style(self, style):
         if style not in self._data_styles:
-            raise ValueError("unexpected data style: '{}'".format(style))
-        # fixme: define custom exception
+            raise ValueError("unexpected test_data style: '{}'".format(style))
 
         to_style = 'to_' + style
         return getattr(self, to_style)()
@@ -49,16 +48,19 @@ class HistoricalPrices(_BaseData):
 
     def read_by_count(self, count):
         now = int(time.time())
+        from_ = self._calc_from_sec(now, count)
 
-        # Always fetch 'count + 1' data and take only 'count'.
-        # This is because the number of data server returns is smaller than expected count by 1
-        # when server generate new data.
-        from_ = now - _PeriodSec[self.period] * (count + 1)
+        # Always fetch 'count + 1' price_data and take only 'count'.
+        # This is because the number of price_data server returns is smaller than expected count by 1
+        # when server generate new price_data.
         self.data = self.data_source.history(currency_pair=self.currency_pair,
                                              period=self.period,
                                              from_sec=from_,
                                              to_sec=now)[-count:]
         return self
+
+    def _calc_from_sec(self, t, count):
+        return t - _PeriodSec[self.period] * (count + 1)
 
     def to_df(self):
         df = pd.DataFrame(self.data, dtype='float')

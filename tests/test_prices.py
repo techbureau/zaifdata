@@ -17,7 +17,7 @@ class TestPrices(unittest.TestCase):
 
         data_from_web = zdp.DataReader(currency_pair, period, start, end)
         file = os.path.join(os.path.abspath(os.path.dirname(__file__)),
-                            'data/xem_jpy_4h_1495119600_1496674800.csv')
+                            'test_data/xem_jpy_4h_1495119600_1496674800.csv')
         web = {
             'time': 0,
             'volume': 0,
@@ -66,7 +66,7 @@ class TestPrices(unittest.TestCase):
 
         df_from_web = zdp.DataReader(currency_pair, period, start, end, style='df')
         file = os.path.join(os.path.abspath(os.path.dirname(__file__)),
-                            'data/xem_jpy_4h_1495119600_1496674800.csv')
+                            'test_data/xem_jpy_4h_1495119600_1496674800.csv')
         df_from_csv = pd.read_csv(file)
 
         # pandas compare dataframes only when columns are same order
