@@ -37,7 +37,7 @@ class _MA(Indicator, metaclass=ABCMeta):
         count = min(count, self.MAX_COUNT)
         price_data = get_data_by_count(currency_pair=self.currency_pair,
                                        period=self.period,
-                                       count=self._get_required_price_count(count),
+                                       count=self._get_required_price_count(self.length, count),
                                        style='df')
 
         return self.create_data_from_prices(price_data, self.length, style)
