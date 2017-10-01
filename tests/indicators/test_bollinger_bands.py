@@ -45,7 +45,9 @@ class TestBBands(unittest.TestCase, IndicatorTestMixIn):
             bands.create_data_from_prices.assert_called_once_with('price_data', 2, 2, 20, 'test', 'dict')
 
     def test_create_bands_df_data_from_prices(self):
-        pass
+        price_data = get_test_price_data()
+        self.assertListEqual(self.bands.create_data_from_prices(
+        ))
 
     def test_create_bands_dict_data_from_prices(self):
         pass

@@ -28,9 +28,9 @@ class _MA(Indicator, metaclass=ABCMeta):
             raise ValueError('not supported style')
 
     @classmethod
-    def create_data_from_prices(cls, price_data, length, style):
-        ma = cls._exec_talib_func(price_data, timeperiod=length)
-        formatted_ma = cls._formatting(price_data, ma, style)
+    def create_data_from_prices(cls, price_data_df, length, style):
+        ma = cls._exec_talib_func(price_data_df, timeperiod=length)
+        formatted_ma = cls._formatting(price_data_df, ma, style)
         return formatted_ma
 
     def request_data(self, count=100, style='dict'):

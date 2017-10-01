@@ -54,5 +54,3 @@ class ADX(Indicator):
                                 style='df')
 
         return self.create_data_from_prices(price_data, self.length, style)
-
-

@@ -56,7 +56,7 @@ class TestMA(unittest.TestCase, IndicatorTestMixIn):
     def test_create_ema_dict_data_from_prices(self):
         price_data = get_test_price_data()
         self.assertListEqual(self.ema.create_data_from_prices(
-            price_data=price_data,
+            price_data_df=price_data,
             length=100,
             style='dict'),
             [
@@ -75,7 +75,7 @@ class TestMA(unittest.TestCase, IndicatorTestMixIn):
 
     def test_create_ema_df_data_from_prices(self):
         price_data = get_test_price_data()
-        ema_from_test_data = self.ema.create_data_from_prices(price_data=price_data,
+        ema_from_test_data = self.ema.create_data_from_prices(price_data_df=price_data,
                                                               length=100,
                                                               style='df')
         ema_from_expected = pd.DataFrame(
@@ -100,7 +100,7 @@ class TestMA(unittest.TestCase, IndicatorTestMixIn):
     def test_create_sma_dict_data_from_prices(self):
         price_data = get_test_price_data()
         self.assertListEqual(self.sma.create_data_from_prices(
-            price_data=price_data,
+            price_data_df=price_data,
             length=100,
             style='dict'),
             [
@@ -120,7 +120,7 @@ class TestMA(unittest.TestCase, IndicatorTestMixIn):
     def test_create_sma_df_data_from_prices(self):
         price_data = get_test_price_data()
 
-        sma_from_test_data = self.sma.create_data_from_prices(price_data=price_data,
+        sma_from_test_data = self.sma.create_data_from_prices(price_data_df=price_data,
                                                               length=100,
                                                               style='df')
         sma_from_expected = pd.DataFrame(

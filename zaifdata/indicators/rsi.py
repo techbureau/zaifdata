@@ -29,9 +29,9 @@ class RSI(Indicator):
             raise ValueError('not supported style')
 
     @classmethod
-    def create_data_from_prices(cls, price_data, length, style):
-        rsi = cls._exec_talib_func(price_data, price='close', timeperiod=length)
-        formatted_rsi = cls._formatting(price_data, rsi, style)
+    def create_data_from_prices(cls, price_data_df, length, style):
+        rsi = cls._exec_talib_func(price_data_df, price='close', timeperiod=length)
+        formatted_rsi = cls._formatting(price_data_df, rsi, style)
         return formatted_rsi
 
     def request_data(self, count=100, style='dict'):

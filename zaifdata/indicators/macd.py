@@ -29,14 +29,14 @@ class MACD(Indicator):
         return count + long + signal - 2
 
     @classmethod
-    def create_data_from_prices(cls, price_data, short, long, signal, style='dict'):
-        macd = cls._exec_talib_func(price_data,
+    def create_data_from_prices(cls, price_data_df, short, long, signal, style='dict'):
+        macd = cls._exec_talib_func(price_data_df,
                                     price='close',
                                     fastperiod=short,
                                     slowperiod=long,
                                     signalperiod=signal)
 
-        formatted_macd = cls._formatting(price_data, macd, style)
+        formatted_macd = cls._formatting(price_data_df, macd, style)
         return formatted_macd
 
     def request_data(self, count=100, style='dict'):
