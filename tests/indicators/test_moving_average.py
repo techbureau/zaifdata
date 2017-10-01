@@ -53,10 +53,9 @@ class TestMA(unittest.TestCase, IndicatorTestMixIn):
                                                           style='df')
                     ma.create_data_from_prices.assert_called_once_with('price_data', 12, 'dict')
 
-    def create_ema_dict_data_from_prices(self):
+    def test_create_ema_dict_data_from_prices(self):
         price_data = get_test_price_data()
-
-        self.assertDictEqual(self.ema.create_data_from_prices(
+        self.assertListEqual(self.ema.create_data_from_prices(
             price_data=price_data,
             length=100,
             style='dict'),
@@ -74,13 +73,12 @@ class TestMA(unittest.TestCase, IndicatorTestMixIn):
              ]
         )
 
-    def create_ema_df_data_from_prices(self):
+    def test_create_ema_df_data_from_prices(self):
         price_data = get_test_price_data()
-        assert_frame_equal(self.ema.create_data_from_prices(
-            price_data=price_data,
-            length=100,
-            style='df'),
-            pd.DataFrame(
+        ema_from_test_data = self.ema.create_data_from_prices(price_data=price_data,
+                                                              length=100,
+                                                              style='df')
+        ema_from_expected = pd.DataFrame(
                 [
                     {'time': 1496545200, 'ema': 27.08150000000001},
                     {'time': 1496559600, 'ema': 27.027414851485158},
@@ -94,11 +92,14 @@ class TestMA(unittest.TestCase, IndicatorTestMixIn):
                     {'time': 1496674800, 'ema': 26.75009565294903},
                 ]
             )
-        )
+        ema_from_test_data.sort_index(axis=1, inplace=True)
+        ema_from_expected.sort_index(axis=1, inplace=True)
 
-    def create_sma_dict_data_from_prices(self):
+        assert_frame_equal(ema_from_test_data, ema_from_expected)
+
+    def test_create_sma_dict_data_from_prices(self):
         price_data = get_test_price_data()
-        self.assertDictEqual(self.sma.create_data_from_prices(
+        self.assertListEqual(self.sma.create_data_from_prices(
             price_data=price_data,
             length=100,
             style='dict'),
@@ -116,13 +117,13 @@ class TestMA(unittest.TestCase, IndicatorTestMixIn):
             ]
         )
 
-    def create_sma_df_data_from_prices(self):
+    def test_create_sma_df_data_from_prices(self):
         price_data = get_test_price_data()
-        assert_frame_equal(self.sma.create_data_from_prices(
-            price_data=price_data,
-            length=100,
-            style='df'),
-            pd.DataFrame(
+
+        sma_from_test_data = self.sma.create_data_from_prices(price_data=price_data,
+                                                              length=100,
+                                                              style='df')
+        sma_from_expected = pd.DataFrame(
                 [
                     {'time': 1496545200, 'sma': 27.08150000000001},
                     {'time': 1496559600, 'sma': 27.111002000000006},
@@ -136,7 +137,11 @@ class TestMA(unittest.TestCase, IndicatorTestMixIn):
                     {'time': 1496674800, 'sma': 26.94592400000001}
                 ]
             )
-        )
+
+        sma_from_test_data.sort_index(axis=1, inplace=True)
+        sma_from_expected.sort_index(axis=1, inplace=True)
+
+        assert_frame_equal(sma_from_test_data, sma_from_expected)
 
 if __name__ == '__main__':
     unittest.main()
