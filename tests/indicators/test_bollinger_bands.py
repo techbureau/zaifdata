@@ -16,13 +16,34 @@ class TestBBands(unittest.TestCase, IndicatorTestMixIn):
         self.assertEqual(self.bands.NAME, 'bbands')
 
     def test_request_data_by_period(self):
-        bands = self.bands(currency_pair='kong_coin', period='forever', length='so_long')
+        bands = self.bands(currency_pair='kong_coin', period='forever', matype='test', length='so_long')
+        bands.create_data_from_prices = MagicMock()
+
+        with patch('zaifdata.indicators.bollinger_bands.DataReader',
+                   return_value='price_data') as mock_get_data:
+            bands.request_data_by_period(start=0, end=100, style='dict')
+            mock_get_data.assert_called_once_with(currency_pair='kong_coin',
+                                                  period='forever',
+                                                  start=0,
+                                                  end=100,
+                                                  style='df')
+
+            bands.create_data_from_prices.assert_called_once_with('price_data', 2, 2, 'so_long', 'test', 'dict')
+
+    def test_request_data(self):
+        bands = self.bands(currency_pair='kong_coin', period='forever', matype='test', length=20)
+        bands.create_data_from_prices = MagicMock()
 
         with patch('zaifdata.indicators.bollinger_bands.get_data_by_count',
                    return_value='price_data') as mock_get_data:
+            bands.request_data(count=20, style='dict')
+            mock_get_data.assert_called_once_with(currency_pair='kong_coin',
+                                                  period='forever',
+                                                  count=39,
+                                                  style='df')
 
-    def test_request_data(self, *args, **kwargs):
-        pass
+            bands.create_data_from_prices.assert_called_once_with('price_data', 2, 2, 20, 'test', 'dict')
+
 
 if __name__ == '__main__':
     unittest.main()
