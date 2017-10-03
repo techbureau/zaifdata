@@ -47,11 +47,31 @@ class TestBBands(unittest.TestCase, IndicatorTestMixIn):
     def test_create_bands_df_data_from_prices(self):
         price_data = get_test_price_data()
         self.assertListEqual(self.bands.create_data_from_prices(
-        ))
+            price_data_df=price_data,
+            length=105),
+            [
+                {'upperband': 35.35302638099354, 'time': 1496617200, 'lowerband': 18.564164095196958},
+                {'upperband': 35.2722508483616, 'time': 1496631600, 'lowerband': 18.623860562240395},
+                {'upperband': 35.226874519065156, 'time': 1496646000, 'lowerband': 18.615725355487747},
+                {'upperband': 35.20458122661314, 'time': 1496660400, 'lowerband': 18.58325261257084},
+                {'upperband': 35.181145611872665, 'time': 1496674800, 'lowerband': 18.554087588836147}
+            ]
+        )
 
     def test_create_bands_dict_data_from_prices(self):
-        pass
+        price_data = get_test_price_data()
 
+        self.assertListEqual(self.bands.create_data_from_prices(
+            price_data_df=price_data,
+            length=105),
+            [
+                {'upperband': 35.35302638099354, 'time': 1496617200, 'lowerband': 18.564164095196958},
+                {'upperband': 35.2722508483616, 'time': 1496631600, 'lowerband': 18.623860562240395},
+                {'upperband': 35.226874519065156, 'time': 1496646000, 'lowerband': 18.615725355487747},
+                {'upperband': 35.20458122661314, 'time': 1496660400, 'lowerband': 18.58325261257084},
+                {'upperband': 35.181145611872665, 'time': 1496674800, 'lowerband': 18.554087588836147}
+            ]
+        )
 
 
 if __name__ == '__main__':
